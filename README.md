@@ -186,6 +186,35 @@ mysql> SELECT * FROM young_animals;
 
 12. Объединить все таблицы в одну, при этом сохраняя поля, указывающие на прошлую принадлежность к старым таблицам.
 ### Решение #12
+```
+USE
+    Human_Friends;
+    
+SELECT h.Name, h.Birthday, h.Commands, pa.Gen_name, yo.Age
+FROM horses h
+LEFT JOIN young_animals yo ON yo.Name = h.Name
+LEFT JOIN pack_animals pa ON pa.Id = h.Gen_id
+UNION 
+SELECT d.Name, d.Birthday, d.Commands, pa.Gen_name, yo.Age 
+FROM donkeys d 
+LEFT JOIN pack_animals pa ON pa.Id = d.Gen_id
+LEFT JOIN young_animals yo ON yo.Name = d.Name
+UNION
+SELECT hm.Name, hm.Birthday, hm.Commands, ha.Gen_name, yo.Age 
+FROM hamsters hm
+LEFT JOIN young_animals yo ON yo.Name = hm.Name
+LEFT JOIN home_animals ha ON ha.Id = hm.Gen_id
+UNION
+SELECT c.Name, c.Birthday, c.Commands, ha.Gen_name, yo.Age 
+FROM cats c
+LEFT JOIN young_animals yo ON yo.Name = c.Name
+LEFT JOIN home_animals ha ON ha.Id = c.Gen_id
+UNION
+SELECT d.Name, d.Birthday, d.Commands, ha.Gen_name, yo.Age 
+FROM dogs d
+LEFT JOIN young_animals yo ON yo.Name = d.Name
+LEFT JOIN home_animals ha ON ha.Id = d.Gen_id;
+```
 
 13. Создать класс с Инкапсуляцией методов и наследованием по диаграмме.
 ### Решение #13
@@ -198,6 +227,7 @@ mysql> SELECT * FROM young_animals;
     -   14.4 обучить животное новым командам
     -   14.5 Реализовать навигацию по меню
 ### Решение #14
+
 
 15. Создайте класс Счетчик, у которого есть метод add(), увеличивающий̆ значение внутренней̆ int переменной̆на 1 при нажатие “Завести новое животное” Сделайте так, чтобы с объектом такого типа можно было работать в блоке try-with-resources. Нужно бросить исключение, если работа с объектом типа счетчик была не в ресурсном try и/или ресурс остался открыт. Значение
 считать в ресурсе try, если при заведения животного заполнены все поля.
